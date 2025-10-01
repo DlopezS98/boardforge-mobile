@@ -34,7 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedInputField(
                 placeholder: "Email address",
                 onChanged: (value) {
-                  formData['email'] = value;
+                  setState(() {
+                    formData['email'] = value;
+                  });
                 },
                 validator: LoginValidator.validateEmail,
               ),
@@ -43,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 validator: LoginValidator.validatePassword,
                 placeholder: "Password",
                 onChanged: (value) {
-                  formData['password'] = value;
+                  setState(() {
+                    formData['password'] = value;
+                  });
                 },
                 isPassword: true,
               ),

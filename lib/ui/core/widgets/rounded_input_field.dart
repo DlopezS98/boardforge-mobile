@@ -29,7 +29,9 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
       validator: widget.validator,
       onChanged: widget.onChanged,
       obscureText: showPassword,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        errorStyle: TextStyle(color: Colors.redAccent, fontSize: 12),
         hintText: widget.placeholder,
         contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: BorderSide.none),
