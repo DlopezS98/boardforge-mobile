@@ -8,6 +8,6 @@ class MainLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Main Layout')), body: Center(child: Text('Main Layout Screen')));
+    return Scaffold(appBar: AppBar(title: Text('Main Layout')), body: AutoRouter());
   }
 }
