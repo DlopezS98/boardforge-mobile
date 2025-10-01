@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:boardforge_app/ui/core/routes/app_router.gr.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -30,6 +31,13 @@ class MainLayoutScreen extends StatelessWidget {
             ),
             ListTile(title: Text('Teams'), onTap: () => {}),
             ListTile(title: Text('Projects'), onTap: () => {}),
+            ListTile(
+              title: Text('Sign out'),
+              leading: Icon(Icons.logout),
+              onTap: () {
+                AutoRouter.of(context).push(const LoginRoute());
+              },
+            ),
           ],
         ),
       ),
