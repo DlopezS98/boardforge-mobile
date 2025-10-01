@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class RoundedInputField extends StatefulWidget {
   final String placeholder;
   final ValueChanged<String> onChanged;
+  final String? Function(String?)? validator;
   final bool isPassword;
   final Widget trailing;
 
@@ -12,6 +13,7 @@ class RoundedInputField extends StatefulWidget {
     required this.onChanged,
     this.isPassword = false,
     this.trailing = const SizedBox.shrink(),
+    this.validator,
   });
 
   @override
@@ -23,7 +25,8 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: widget.validator,
       onChanged: widget.onChanged,
       obscureText: showPassword,
       decoration: InputDecoration(
