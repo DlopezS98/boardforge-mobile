@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:boardforge_app/data/services/authentication_service.dart';
 import 'package:boardforge_app/ui/authentication/logic/login_validator.dart';
 import 'package:boardforge_app/ui/core/routes/app_router.gr.dart';
 import 'package:boardforge_app/ui/core/widgets/rounded_input_field.dart';
@@ -15,9 +16,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _authenticationService = AuthenticationService();
   final Map<String, String> formData = {};
 
   final formState = GlobalKey<FormState>();
+
+  Future<void> submit() async {
+    final formState = this.formState.currentState;
+    if (formState == null || !formState.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor, complete el formulario')));
+      return;
+    }
+
+    try {
+      String email = formData['email'] ?? '';
+      String password = formData['password'] ?? '';
+      await _authenticationService.login(email, password);
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login failed: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   style: ButtonStyle(),
                   onPressed: () {
-                    AutoRouter.of(context).push(const MainLayoutRoute());
+                    // AutoRouter.of(context).push(const MainLayoutRoute());
+                    submit();
                   },
                   child: Text('Login'),
                 ),
