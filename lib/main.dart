@@ -6,12 +6,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   // debugPrint('Current Environment: ${Environment.instance.environment}');
-  await dotenv.load(fileName: 'production.env');
+  String environment = Environment.instance.environment;
+  await dotenv.load(fileName: '$environment.env');
 
   debugPrint('BASE_API_URL: ${Environment.instance.baseApiUrl}');
   debugPrint('OTHER_ENVIRONMENT_VARIABLE: ${Environment.instance.otherEnvironmentVariable}');
   debugPrint('PRUEBA_VARIABLE: ${Environment.instance.pruebaVariable}');
   runApp(MainApp());
+  debugPrint('Current Environment: ${Environment.instance.environment}');
 }
 
 class MainApp extends StatelessWidget {
