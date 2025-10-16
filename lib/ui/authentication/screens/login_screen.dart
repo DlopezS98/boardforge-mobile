@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
+import 'package:boardforge_app/data/models/token.dart';
 import 'package:boardforge_app/data/services/authentication_service.dart';
 import 'package:boardforge_app/ui/authentication/logic/login_validator.dart';
 import 'package:boardforge_app/ui/core/routes/app_router.gr.dart';
 import 'package:boardforge_app/ui/core/widgets/rounded_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -29,9 +32,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
+      final storage = FlutterSecureStorage();
       String email = formData['email'] ?? '';
       String password = formData['password'] ?? '';
-      await _authenticationService.login(email, password);
+      final Token token = await _authenticationService.login(email, password);
+      storage.write(key: 'authToken', value: jsonEncode(token.toJson()));
+      AutoRouter.of(context).push(const MainLayoutRoute());
     } on Exception catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login failed: $e')));
     }

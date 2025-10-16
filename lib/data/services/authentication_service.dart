@@ -1,10 +1,10 @@
+import 'package:boardforge_app/core/utils/environment.dart';
+import 'package:boardforge_app/data/models/token.dart';
 import 'package:dio/dio.dart';
 
 class AuthenticationService {
-  final String apiUrl = 'http://172.16.180.116:5017/api';
-
-  Future<void> login(String email, String password) async {
-    Dio dio = Dio(BaseOptions(baseUrl: apiUrl));
+  Future<Token> login(String email, String password) async {
+    Dio dio = Dio(BaseOptions(baseUrl: Environment.instance.baseApiUrl));
     String endpoint = '/authentication/login';
     final Map<String, String> data = {'email': email, 'password': password};
     final response = await dio.post(endpoint, data: data);
@@ -12,6 +12,6 @@ class AuthenticationService {
       throw Exception('Failed to login: ${response.data['message']}');
     }
 
-    print('Login successful: ${response.data}');
+    return Token.fromJson(response.data);
   }
 }
